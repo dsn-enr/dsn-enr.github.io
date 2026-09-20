@@ -1,23 +1,23 @@
-@font-face { font-family: 'BBBDMSans'; src: url('fonts/BBBDMSans-Light.woff2') format('woff2'); font-weight: 300;  font-style: normal;}
-@font-face { font-family: 'BBBDMSans'; src: url('fonts/BBBDMSans-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal;}
-@font-face { font-family: 'BBBDMSans'; src: url('fonts/BBBDMSans-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal;}
-@font-face { font-family: 'BBBDMSans'; src: url('fonts/BBBDMSans-Bold.woff2') format('woff2'); font-weight: 700;  font-style: normal;}
-@font-face { font-family: 'Interlope'; src: url('fonts/Interlope-Regular.woff2') format('woff2'); font-weight: 300;  font-style: normal;}
+@font-face { font-family: 'BBBDMSans'; src: url('library/fonts/BBBDMSans-Light.woff2') format('woff2'); font-weight: 300;  font-style: normal;}
+@font-face { font-family: 'BBBDMSans'; src: url('library/fonts/BBBDMSans-Regular.woff2') format('woff2'); font-weight: 400; font-style: normal;}
+@font-face { font-family: 'BBBDMSans'; src: url('library/fonts/BBBDMSans-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal;}
+@font-face { font-family: 'BBBDMSans'; src: url('library/fonts/BBBDMSans-Bold.woff2') format('woff2'); font-weight: 700;  font-style: normal;}
+@font-face { font-family: 'Interlope'; src: url('library/fonts/Interlope-Regular.woff2') format('woff2'); font-weight: 300;  font-style: normal;}
 
 /* GENERAL */
 
-body {
-    margin: 45px;
-    padding: 0;
-
-    font-family: 'BBBDMSans', sans-serif; 
-    font-size: 27px;
-    font-weight: 300; 
-    line-height: 1.05em;
-
-    background-color: #c8c8c8;
-    color: blue;
+body { 
+  margin: 45px; 
+  padding: 0; 
+  font-family: BBBDMSans, sans-serif; 
+  font-size: 27px; 
+  font-weight: 300; 
+  line-height: 1.05em; 
+  background-color: #c8c8c8; 
+  animation: changementCouleur 30s ease-in-out infinite; 
 }
+
+@keyframes changementCouleur {0% {color: blue;} 33% {color: #8a2be2;} 66% {color: #ff1493;} 100% {color: blue;}}
 
 main {margin: 0; max-width: 100%;}
 body.full {margin: 0px;}
@@ -50,7 +50,6 @@ a {
 }
 
 a:hover {
-    opacity: 0.6;
     transform: scale(0.75);
 }
 
@@ -67,10 +66,32 @@ nav {
 nav a {
     margin: 0 0 0 20px;
     padding: 5px 5px;
-    background-color: #c8c8c8;
-    color: blue;
+    color: inherit;
     text-decoration: none;
     border-radius: 5px;
+    position: relative;
+    z-index: 1;
+}
+
+nav a::before {
+    content: "";
+    position: absolute;
+    top: -20px; left: -20px; right: -20px; bottom: -20px;
+    z-index: -1;
+    border-radius: 5px;
+    
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+
+    -webkit-mask-image: 
+        linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+    mask-image: 
+        linear-gradient(to right, transparent 0%, black 30%, black 70%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+    
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
 }
 
 .fixed-center-nav {     
@@ -87,7 +108,6 @@ nav a {
 .fixed-center-nav a {     
     display: inline-block;     
     padding: 5px 5px;     
-    background-color: blue;     
     color: #c8c8c8;     
     text-decoration: none;     
     border-radius: 5px;     
@@ -97,7 +117,10 @@ nav a {
     overflow: hidden;          
     text-overflow: ellipsis;   
     vertical-align: middle;
+    animation: changementFond 30s ease-in-out infinite; 
 }
+
+@keyframes changementFond {0% {background-color: blue;} 33% {background-color: #8a2be2;} 66% {background-color: #ff1493;} 100% {background-color: blue;}}
 
 /* VIDEO */
 
@@ -153,52 +176,45 @@ video {
     position: relative;
     width: 100%;
     min-height: 100vh;
-    overflow-x: hidden;
-    overflow-y: auto;   
+    overflow: hidden;   
 }
 
 .card {
     position: absolute; 
-    width: 300px;       
-    height: 300px;      
+    width: auto;                  
+    height: auto;
     cursor: grab;
-    border: none !important;
     user-select: none;
     touch-action: none;
     z-index: 1;
-    overflow: visible;  
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center;          
+    justify-content: flex-start;
     animation: floatContinuous 3.0s ease-in-out infinite alternate;
     transition: filter 0.5s ease;
 }
 
-.card.dragging {animation: none !important;}
-.card:active {cursor: grabbing;}
-
-.card img {
+.card::before {
+    content: '';
     display: block;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain; 
-    pointer-events: none;
-    transition: filter 0.5s ease;
+    width: 20px;
+    height: 20px;
+    background-color: currentColor; 
+    border-radius: 50%;             
+    margin-right: 12px;             
+    flex-shrink: 0;                 
+    transition: transform 0.3s ease;
 }
 
-.card:hover img {filter: grayscale(1);} 
+.card.dragging { animation: none !important; }
+.card:active { cursor: grabbing; }
+.card:hover::before { transform: scale(1.2); } 
 
 .card .card-content {
-    position: absolute;
-    width: 160px;          
-    background: transparent !important; 
-    padding: 0 !important;              
-    box-shadow: none !important;        
-    text-align: left;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    pointer-events: none;
+    justify-content: center;
+    pointer-events: auto;
     box-sizing: border-box;
     z-index: 2;            
 }
@@ -206,8 +222,7 @@ video {
 .card-content h3 { 
     font-size: 1em !important; 
     line-height: 1.05em; 
-    margin: 0 0 4px 0 !important; 
-    background: transparent !important; 
+    margin: 0 0 2px 0 !important; 
     font-weight: 300;
 }
 
@@ -215,7 +230,6 @@ video {
     font-size: 0.66em !important; 
     line-height: 1.05em;
     margin: 0 !important; 
-    background: transparent !important; 
     font-weight: 700;
 }
 
@@ -280,16 +294,16 @@ video {
 
 .close {
     position: fixed;
-    top: 35px;
-    right: 35px;
+    top: 25px;
+    right: 25px;
     width: 120px;
     height: 120px;
     padding: 0;
     border: none;
     background: transparent;
-    color: blue;
     cursor: pointer;
     transition: 0.5s;
+    animation: changementCouleur 30s ease-in-out infinite; 
 }
 
 .close svg {
@@ -299,4 +313,25 @@ video {
 }
 
 .close path {stroke-width: 0.6;}
-.close:hover {transform: scale(0.75);;}
+.close:hover {transform: scale(0.75);}
+
+/* RESPONSIVE  */
+
+@media screen and (max-width: 768px) {
+    body {margin: 15px; font-size: 18px; line-height: 1.2em;}
+    h2 {font-size: 1.1em;}
+    .popup h2#popup-title {font-size: 1.4em; margin-bottom: 20px;}
+    section p {margin-left: 0; margin-right: 0;}
+    .fixed-center-nav {left: -5px; transform: none; max-width: calc(100vw - 30px);}
+    .video-container {margin-left: 0; width: 100%;}
+    .card .card-content {
+        display: none !important;
+        position: absolute;
+        left: 32px; 
+        background: rgba(200, 200, 200, 0.95);
+        padding: 6px 10px !important;
+        border-radius: 4px;
+        white-space: nowrap;}
+    .card.show-info .card-content {display: flex !important;}
+    .close {top: 20px; right: 20px; width: 65px; height: 65px;}
+}
