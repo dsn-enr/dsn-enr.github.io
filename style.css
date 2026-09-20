@@ -126,9 +126,10 @@ nav a::before {
 
 .video-container {
     position: relative;
-    margin: 0 0 45px 45px;
+    margin: 0 auto 45px auto;
     width: 66.66%;
     overflow: hidden;
+    animation: changementCouleur 30s ease-in-out infinite;
 }
 
 video {
@@ -158,17 +159,83 @@ video {
     background: none;
     opacity: 1;
     cursor: pointer;
-    z-index: -1;
+    z-index: 10;
+    color: inherit;
 }
 
 .bigPlayBtn svg {
     width: 100%;
     height: 100%;
-    fill: white;
+    fill: currentColor;
 }
 
 .video-container.playing .bigPlayBtn {opacity: 0; transition: opacity .5s ease;}
 .video-container.playing:hover .bigPlayBtn {opacity: 1;}
+
+.video-timeline {
+    position: absolute;
+    bottom: -2px;
+    width: 100%;
+    z-index: 11;
+    display: flex;
+    align-items: center;
+}
+
+.video-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    background: transparent;
+    animation: changementCouleurBarre 30s ease-in-out infinite;
+}
+
+.video-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    animation: changementCouleurFond 30s ease-in-out infinite;
+}
+
+.video-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.8);
+}
+
+.video-slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    animation: changementCouleurFond 30s ease-in-out infinite;
+}
+
+.video-slider::-moz-range-thumb:hover {
+    transform: scale(1.8);
+}
+
+@keyframes changementCouleurBarre {
+    0% { background-color: blue; }
+    33% { background-color: #8a2be2; }
+    66% { background-color: #ff1493; }
+    100% { background-color: blue; }
+}
+
+@keyframes changementCouleurFond {
+    0% { background-color: blue; }
+    33% { background-color: #8a2be2; }
+    66% { background-color: #ff1493; }
+    100% { background-color: blue; }
+}
+
 
 /* GUIDES */
 
@@ -208,7 +275,7 @@ video {
 
 .card.dragging { animation: none !important; }
 .card:active { cursor: grabbing; }
-.card:hover::before { transform: scale(1.2); } 
+.card:hover::before { transform: scale(1.8); } 
 
 .card .card-content {
     display: flex;
@@ -248,6 +315,7 @@ video {
     align-items: center;
     z-index: 9999;
     padding: 20px 20px; 
+    cursor: pointer;
 }
 
 .popup h2#popup-title {
@@ -278,6 +346,7 @@ video {
     padding: 50px 30px; 
     scrollbar-width: none; 
     -ms-overflow-style: none; 
+    cursor: default;
 
     background-color: #c8c8c8;
     border-radius: 6px;
@@ -303,7 +372,7 @@ video {
     background: transparent;
     cursor: pointer;
     transition: 0.5s;
-    animation: changementCouleur 30s ease-in-out infinite; 
+    color: inherit;  
 }
 
 .close svg {
@@ -312,8 +381,127 @@ video {
     height: 100%;
 }
 
-.close path {stroke-width: 0.6;}
+.close path {stroke-width: 2; stroke: currentColor; fill: none;}
 .close:hover {transform: scale(0.75);}
+
+/* TIMELINE */
+
+.timeline-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 0 40px;
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.timeline-wrapper {
+  position: relative;
+  flex-grow: 1;
+  margin: 0 40px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  z-index: 1;
+  /* Aligné précisément sur le centre de la rangée des points */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* SOLUTION : La grille globale est appliquée ici */
+.timeline-track {
+  display: grid;
+  /* Crée 3 rangées horizontales indépendantes de la longueur du texte */
+  grid-template-rows: 1fr auto 1fr; 
+  /* Génère une colonne par année automatiquement */
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(150px, max-content);
+  gap: 0 300px; /* Espace horizontal de 300px entre les colonnes */
+  padding: 0 150px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  align-items: center;
+}
+
+.timeline-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Modifié : subgrid permet d'aligner les enfants sur la grille globale du parent */
+.timeline-item {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: 1 / span 3;
+  justify-items: center;
+  cursor: pointer;
+  text-align: center;
+}
+
+.timeline-date {
+  grid-row: 1;
+  font-size: 0.8em;
+  font-weight: 700;
+  margin-bottom: 25px;
+  align-self: end; /* Force l'alignement juste au-dessus du point */
+}
+
+.timeline-dot {
+  grid-row: 2;
+  width: 20px;
+  height: 20px;
+  background-color: currentColor;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.timeline-item:hover .timeline-dot {
+  transform: scale(1.8);
+}
+
+.timeline-title {
+  grid-row: 3;
+  font-weight: 300;
+  font-size: 1.2em;
+  margin-top: 25px;
+  align-self: start; /* Force l'alignement juste en dessous du point */
+}
+
+/* --- RESTE DU STYLE DES BOUTONS --- */
+.nav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  color: inherit;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-btn svg { width: 80px; height: 80px; }
+.nav-btn:hover { transform: scale(1.15); }
+.nav-btn:active { opacity: 0.6; }
+
+
 
 /* RESPONSIVE  */
 

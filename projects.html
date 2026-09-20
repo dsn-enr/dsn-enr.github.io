@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="stylesheet" href="style.css" />
+        <title>Pratique</title>
+        <link rel="shortcut icon" href="library/icone.ico">
+
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+
+        <meta property="og:image" content="" />
+        <meta property="og:type" content="" />
+        <meta property="og:url" content="" />
+        <meta property="og:title" content="" />
+        <meta property="og:description" content="" />
+        <meta property="og:author" content="" />
+        <meta property="og:keywords" content="" />
+    </head>
+
+    <body>
+        <nav class="fixed-center-nav">
+            <a id="aniFunFun" href="index.html">Pratique</a>
+        </nav>
+
+        <nav>
+            <a href="guides.html">Guides</a>
+            <a href="projects.html">Projets</a>
+            <a href="about.html">À propos</a>
+        </nav>
+
+        <main>  
+            <div class="timeline-container">
+
+              <button id="prev-btn" class="nav-btn left-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+<!-- END END END END -->
+              <div class="timeline-wrapper">
+                <div class="timeline-line"></div>
+                <div class="timeline-track" id="timeline-track">
+<!-- X -->
+                  <div class="timeline-item" data-title="Projet 2020" data-desc="Détails complets du popup pour 2020...">
+                    <span class="timeline-date">2020</span>
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-title">Welcome to Bavière</span>
+                  </div>
+<!-- X -->
+                  <div class="timeline-item" data-title="Projet 2020" data-desc="Détails complets du popup pour 2020...">
+                    <span class="timeline-date">2021</span>
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-title">190 Degrés</span>
+                  </div>
+<!-- X -->
+                  <div class="timeline-item" data-title="Projet 2020" data-desc="Détails complets du popup pour 2020...">
+                    <span class="timeline-date">2022</span>
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-title">Zone Tampon</span>
+                  </div>
+<!-- X -->
+                  <div class="timeline-item" data-title="Projet 2020" data-desc="Détails complets du popup pour 2020...">
+                    <span class="timeline-date">2023</span>
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-title">Ville Partagée</span>
+                  </div>
+<!-- X -->
+                  <div class="timeline-item" data-title="Projet 2020" data-desc="Détails complets du popup pour 2020...">
+                    <span class="timeline-date">2024</span>
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-title">Waiting Zone</span>
+                  </div>
+<!-- X -->
+                  <div class="timeline-item" data-title="Projet 2020" data-desc="Détails complets du popup pour 2020...">
+                    <span class="timeline-date">2025</span>
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-title">La Navette</span>
+                  </div>
+<!-- X -->
+                  <div class="timeline-item" data-title="Projet 2020" data-desc="Détails complets du popup pour 2020...">
+                    <span class="timeline-date">2026</span>
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-title">Votez MAL</span>
+                  </div>
+<!-- END END END END -->
+                  <button id="next-btn" class="nav-btn right-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </button>
+                </div>
+        </main>
+
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <button class="close" onclick="closePopup()">
+                    <svg viewBox="0 0 100 100">
+                        <path d="M 20,20 L 80,80 M 80,20 L 20,80" stroke="currentColor"/>
+                    </svg>
+                </button>
+                <h2 id="popup-title"></h2>
+                <p><span id="popup-author"></span></p>
+                <div id="popup-media"></div>
+                <div id="popup-text"></div>
+            </div>
+        </div>
+
+        <script src="library/script.js"></script>
+    </body>
+</html>
