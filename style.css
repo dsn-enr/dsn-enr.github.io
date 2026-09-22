@@ -501,8 +501,6 @@ video {
 .nav-btn:hover { transform: scale(1.15); }
 .nav-btn:active { opacity: 0.6; }
 
-
-
 /* RESPONSIVE  */
 
 @media screen and (max-width: 768px) {
@@ -510,6 +508,7 @@ video {
     h2 {font-size: 1.1em;}
     .popup h2#popup-title {font-size: 1.4em; margin-bottom: 20px;}
     section p {margin-left: 0; margin-right: 0;}
+    nav {right: 25px; bottom: 12px;}
     .fixed-center-nav {left: -5px; transform: none; max-width: calc(100vw - 30px);}
     .video-container {margin-left: 0; width: 100%;}
     .card .card-content {
